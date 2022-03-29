@@ -4,7 +4,7 @@ import { describe } from 'mocha';
 // tslint:disable-next-line:no-var-requires
 const jsdom: () => void = require('mocha-jsdom');
 
-// import { render } from '../../src/api;
+import { render } from '../../src/api';
 
 describe('Integrations test', () => {
   jsdom();
@@ -13,10 +13,9 @@ describe('Integrations test', () => {
     document.body.innerHTML = '<div id="root"></div>';
   });
 
-  describe('stub', () => {
-    it('stub', () => {
-      expect(true).to.be.true;
+  describe('render', () => {
+    it('should be a function', () => {
+      expect(typeof render).to.equal('function');
     });
   });
-
 });
