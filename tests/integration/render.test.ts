@@ -16,6 +16,9 @@ describe('Integrations test', () => {
   describe('render', () => {
     it('should be a function', () => {
       expect(typeof render).to.equal('function');
+
+      // Stub
+      render()
     });
   });
 });
