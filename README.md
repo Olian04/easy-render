@@ -4,13 +4,15 @@
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/easy-render)](https://bundlephobia.com/package/easy-render)
 ![Available Types](https://img.shields.io/npm/types/easy-render)
 [![License](https://img.shields.io/github/license/olian04/easy-render)](LICENSE)
+[![CircleCI](https://img.shields.io/circleci/build/github/Olian04/easy-render?label=tests&logo=circleci)](https://app.circleci.com/pipelines/github/Olian04/easy-render)
+[![Test Coverage](https://img.shields.io/codecov/c/gh/olian04/easy-render?logo=codecov)](https://app.codecov.io/gh/Olian04/easy-render)
 
 > Easy-Render is a vdom renderer with an easy to understand and easy use functional interface.
 
 ## WIP
 
 ```ts
-import { render } from 'brynja-render-template';
+import { render } from 'easy-render';
 
 render`
 <div class="box">
