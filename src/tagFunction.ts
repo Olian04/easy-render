@@ -39,7 +39,7 @@ export const tagFunction: TagFunction = (staticSegments, ...dynamicSegments) => 
     }
   }
   return {
-    xml: resultXML,
+    xml: resultXML.replaceAll('\n', ''),
     dynamics: dynamicsCache,
   }
 }
