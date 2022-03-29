@@ -1,0 +1,70 @@
+{
+  "name": "easy-render",
+  "version": "0.1.0",
+  "description": "A vdom renderer with an easy to understand and easy use functional interface.",
+  "main": "dist/api.js",
+  "types": "dist/api.d.ts",
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "test": "nyc --check-coverage --reporter=lcov --reporter=text --extension .ts mocha --reporter mocha-multi-reporters --reporter-options configFile=mocha.reporters.config.json  --recursive -r ts-node/register 'tests/**/*.test.ts' ",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "prebuild": "npm run test && npm run lint:nofix",
+    "build": "npm run build:node && npm run build:web",
+    "build:node": "tsc",
+    "build:web": "rollup --config",
+    "lint": "tslint --fix -c ./tslint.json 'src/**/*{.ts,.tsx}'",
+    "lint:nofix": "tslint -c ./tslint.json 'src/**/*{.ts,.tsx}'"
+  },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.ts",
+      "**/*.test.ts"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Olian04/easy-render.git"
+  },
+  "keywords": [
+    "renderer",
+    "vdom",
+    "dom",
+    "virtual dom",
+    "render",
+    "easy",
+    "brynja"
+  ],
+  "author": "olian04",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Olian04/easy-render/issues"
+  },
+  "homepage": "https://github.com/Olian04/easy-render#readme",
+  "devDependencies": {
+    "@types/chai": "^4.3.0",
+    "@types/es6-promise": "3.3.0",
+    "@types/mocha": "^9.1.0",
+    "@types/rollup-plugin-commonjs": "^9.3.1",
+    "@types/rollup-plugin-node-resolve": "^4.1.0",
+    "@types/typescript": "^2.0.0",
+    "chai": "^4.3.6",
+    "codecov": "^3.8.3",
+    "mocha": "^9.2.2",
+    "mocha-jsdom": "^2.0.0",
+    "mocha-junit-reporter": "^2.0.2",
+    "mocha-multi-reporters": "^1.5.1",
+    "nyc": "^15.1.0",
+    "rollup": "^2.70.1",
+    "rollup-plugin-babel-minify": "^10.0.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "ts-node": "^10.7.0",
+    "tslib": "^2.3.1",
+    "tslint": "^6.1.3",
+    "typescript": "^4.6.2"
+  },
+  "dependencies": {
+    "brynja": "^4.0.7"
+  }
+}

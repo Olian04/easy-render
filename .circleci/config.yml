@@ -1,0 +1,54 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:12.22
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+
+      # run linting no fix
+      - run: npm run lint:nofix
+
+      # run tests
+      - run: npm test
+
+      # store test result artifacts
+      # NOTE: path can NOT be a hidden directory, aka starting with a dot, ex: .mocha_output
+      - store_test_results:
+          path: mocha_output
+      - store_artifacts:
+          path: mocha_output
+
+      # build node
+      - run: npm run build:node
+
+      # build web
+      - run: npm run build:web
+
+      # upload coverage
+      - run: npm run coverage
+
+
