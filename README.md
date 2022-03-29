@@ -5,7 +5,7 @@
 ![Available Types](https://img.shields.io/npm/types/easy-render)
 [![License](https://img.shields.io/github/license/olian04/easy-render)](LICENSE)
 
-A vdom renderer with an easy to understand and easy use functional interface.
+> Easy-Render is a vdom renderer with an easy to understand and easy use functional interface.
 
 ## WIP
 
