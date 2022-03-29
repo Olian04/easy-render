@@ -1,5 +1,5 @@
 import { AssertionError, expect } from 'chai';
-import { describe } from 'mocha';
+import { describe, it } from 'mocha';
 
 // tslint:disable-next-line:no-var-requires
 const jsdom: () => void = require('mocha-jsdom');
@@ -14,11 +14,21 @@ describe('Integrations test', () => {
   });
 
   describe('render', () => {
-    it('should be a function', () => {
+    it('should be a tag function', () => {
       expect(typeof render).to.equal('function');
 
-      // Stub
-      render()
+      try {
+        const name = 'World';
+        render`
+          <h>Hello ${name}!</h>
+        `;
+      } catch {
+        expect.fail();
+      }
+    });
+
+    it('should add placeholder values for function when provided', () => {
+      
     });
   });
 });

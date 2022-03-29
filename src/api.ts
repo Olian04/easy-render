@@ -1,3 +1,9 @@
-export const render = () => {
-  console.warn('This publication of "easy-render" serves as a stub and cant be used, please install a later version');
-}
+import { defaultRendererFactory } from './defaultRenderer';
+import { RenderFunction } from './types/RenderFunction';
+
+export { Renderer } from './renderer';
+
+const defaultRenderer = defaultRendererFactory();
+
+export const render: RenderFunction = (statics, ...dynamics) =>
+    defaultRenderer().render(statics, ...dynamics);
