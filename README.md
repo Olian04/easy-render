@@ -68,7 +68,7 @@ render`
 ...would result in the following brynja builder:
 
 ```ts
-const _0 = ({}) => _=>_
+const _0 = _=>_
   .child('h1', _=>_
     .text('Hello World')
   )
