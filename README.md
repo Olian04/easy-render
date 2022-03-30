@@ -122,7 +122,9 @@ Internallay `r` would make up the majority of the logic in the `render` function
 
 ```ts
 export function Renderer(config: { rootElement: HTMLElement, rootElementBuilder?: BuilderCB }): IRenderer {
-  const brynja = BrynjaRenderer(config);
+  const brynja = BrynjaRenderer({
+    rootElement: config.rootElement,
+  });
   return {
     render: (staticSegments, ...dynamicSegments) => {
       const brynjaBuilder = r(staticSegments, ...dynamicSegments);
