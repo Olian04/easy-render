@@ -46,7 +46,7 @@ setInterval(() => {
 ## r (render component)
 
 
-`r` should return a brynja component? This way `r` would be implicitly responsible for rendering its own subtree, independant from the entire tree.
+`r` should return a brynja builder. This way `r` would be implicitly responsible for rendering its own subtree, independant from the entire tree.
 
 ```ts
 type r = (staticSegments: TemplateStringsArray, ...dynamicSegments: DynamicSegments[]) => BrynjaBuilder
