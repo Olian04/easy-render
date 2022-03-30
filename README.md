@@ -84,7 +84,7 @@ This whould also mean that `easy-render` would support full interop with `brynja
 
 ```ts
 import { render } from 'easy-render';
-import { createComponent } form 'brynja';
+import { createComponent } from 'brynja';
 
 const HelloWorld = createComponent(() => _=>_
   .child('h1', _=>_
@@ -105,7 +105,7 @@ render`
 
 ```ts
 import { r } from 'easy-render';
-import { render } form 'brynja';
+import { render } from 'brynja';
 
 const HelloWorld = () => r`
   <h1>Hello World</h1>
