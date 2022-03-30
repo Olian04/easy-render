@@ -7,7 +7,7 @@
 [![CircleCI](https://img.shields.io/circleci/build/github/Olian04/easy-render?label=tests&logo=circleci)](https://app.circleci.com/pipelines/github/Olian04/easy-render)
 [![Test Coverage](https://img.shields.io/codecov/c/gh/olian04/easy-render?logo=codecov)](https://app.codecov.io/gh/Olian04/easy-render)
 
-> Easy-Render is a vdom renderer with an easy to understand and easy use functional interface.
+> Easy-Render is a vDOM renderer designed to be as easy to use as possible.
 
 ## WIP
 
