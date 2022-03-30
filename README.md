@@ -9,7 +9,117 @@
 
 > Easy-Render is a vDOM renderer designed to be as easy to use as possible.
 
-## WIP
+```ts
+import { render } from 'easy-render';
+
+const name = 'Easy-Render';
+
+render`
+  <p>Hello ${name}!</p>
+`;
+```
+
+```ts
+import { render, r } from 'easy-render';
+
+const listElements = (elements = []) => {
+  render`
+    <ul>
+      ${elements.map(v => r`
+        <li>${v}</li>
+      `)}
+    </ul>
+  `;
+}
+
+listElements();
+let numbers = [];
+setInterval(() => {
+  numbers.push(numbers.length);
+  listElements(numbers);
+}, 1000);
+
+```
+
+---
+
+## r (render component)
+
+
+`r` should return a brynja component? This way `r` would be implicitly responsible for rendering its own subtree, independant from the entire tree.
+
+```ts
+type r = (staticSegments: TemplateStringsArray, ...dynamicSegments: DynamicSegments[]) => BrynjaBuilder
+```
+
+This would mean that the following code:
+
+```ts
+render`
+  <div>
+    ${[
+      r`<h1>Hello World</h1>`
+     ]}
+  </div>
+`;
+```
+
+
+...would result in the following brynja builder:
+
+```ts
+const _1 = ({}) => _=>_
+  .child('h1', _=>_
+    .text('Hello World')
+  )
+
+render(_=>_
+  .child('div', _=>_
+    .do(_1)
+  )
+);
+```
+
+This whould also mean that `easy-render` would support full interop with `brynja`:
+
+```ts
+import { render } from 'easy-render';
+import { createComponent } form 'brynja';
+
+const HelloWorld = createComponent(() => _=>_
+  .child('h1', _=>_
+    .text('Hello World')
+  )
+);
+
+render`
+  <div>
+    ${[
+      HelloWorld()
+     ]}
+  </div>
+`;
+```
+
+...and vice versa... interestingly:
+
+```ts
+import { r } from 'easy-render';
+import { render } form 'brynja';
+
+const HelloWorld = () => r`
+  <h1>Hello World</h1>
+`;
+
+render(_=>_
+  .child('div', _=>_
+    .do(HelloWorld())
+  )
+);
+```
+
+
+### WIP
 
 ```ts
 import { render } from 'easy-render';
