@@ -118,6 +118,49 @@ render(_=>_
 );
 ```
 
+Internallay `r` would make up the majority of the logic in the `render` function (mock implementation):
+
+```ts
+export function Renderer(config: { rootElement: HTMLElement, rootElementBuilder?: BuilderCB }): IRenderer {
+  const brynja = BrynjaRenderer(config);
+  return {
+    render: (staticSegments, ...dynamicSegments) => {
+      const brynjaBuilder = r(staticSegments, ...dynamicSegments);
+
+      // Render using brynja
+      brynja.render(_=>_
+        .do(config.rootElementBuilder ?? (_=> {
+          // Echo props from root node if no custom rootElementBuilder was provided
+          _.while(i => i < config.rootElement.attributes.length, (_, i)=> {
+            const attribute = config.rootElement.attributes.item(i);
+            if (attribute === null) { return; }
+            _.prop(attribute.name, attribute.value);
+          })
+        }))
+        .do(brynjaBuilder)
+      );
+    }
+  }
+}
+```
+
+Mock implementation of `r`:
+
+```ts
+const r = (staticSegments: TemplateStringsArray, ...dynamicSegments: DynamicSegments[]): BrynjaBuilder => {
+  const { xml, dynamics } = processTagFunctionData({
+    static: staticSegments,
+    dynamic: dynamicSegments,
+  });
+  
+  const DOM = parseXML(xml);
+  
+  const builder = constructBrynjaBuilder({ DOM, dynamics });
+  
+  return builder;
+}
+```
+
 
 ### WIP
 
