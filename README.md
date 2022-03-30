@@ -68,14 +68,14 @@ render`
 ...would result in the following brynja builder:
 
 ```ts
-const _1 = ({}) => _=>_
+const _0 = ({}) => _=>_
   .child('h1', _=>_
     .text('Hello World')
   )
 
 render(_=>_
   .child('div', _=>_
-    .do(_1)
+    .do(_0)
   )
 );
 ```
