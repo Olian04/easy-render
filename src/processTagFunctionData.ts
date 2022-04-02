@@ -1,10 +1,10 @@
 import { DynamicsCache } from "./types/DynamicCache";
-import { TagFunction } from "./types/TagFunction";
+import { DynamicSegments } from "./types/DynamicSegments";
 import { EasyRenderError } from "./util/EasyRenderError";
 
 const isStaticSegment = (v: number) => v % 2 === 0;
 
-export const tagFunction: TagFunction = (staticSegments, ...dynamicSegments) => {
+export const processTagFunctionData = (segment: { statics: TemplateStringsArray, dynamics: DynamicSegments[] }) => {
   const dynamicsCache: DynamicsCache = {
     functions: [],
     objects: [],
@@ -12,12 +12,12 @@ export const tagFunction: TagFunction = (staticSegments, ...dynamicSegments) => 
   let resultXML = '';
   let staticIndex = 0;
   let dynamicIndex = 0;
-  for (let i = 0; i < staticSegments.length + dynamicSegments.length; i++) {
+  for (let i = 0; i < segment.statics.length + segment.dynamics.length; i++) {
     if (isStaticSegment(i)) {
-      resultXML += staticSegments[staticIndex];
+      resultXML += segment.statics[staticIndex];
       staticIndex += 1;
     } else {
-      const dynVal = dynamicSegments[dynamicIndex];
+      const dynVal = segment.dynamics[dynamicIndex];
       switch (typeof dynVal) {
         case 'function':
           resultXML += `"placeholder-function-${dynamicsCache.functions.length}"`

@@ -2,6 +2,7 @@ import { defaultRendererFactory } from './defaultRenderer';
 import { RenderFunction } from './types/RenderFunction';
 
 export { Renderer } from './renderer';
+export { createComponentBuilder as r } from './createComponentBuilder';
 
 const defaultRenderer = defaultRendererFactory();
 
