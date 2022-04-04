@@ -9,32 +9,84 @@
 
 > Easy-Render is a vDOM renderer designed to be as easy to use as possible.
 
+# Why Easy-Render
+
+* It's small.
+* It requires NO transpilation, everything runs as is in the browser.
+* Everything is 100% typed and ready for Typescript!
+
+# Installation
+
+__NPM:__
+
+[`npm install easy-render`](https://www.npmjs.com/package/easy-render)
+
+__CDN:__
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/easy-render/cdn/easy-render.js"></script>
+<script>
+  const { render } = easyRender;
+</script>
+```
+
+# Help me help you
+
+Please ⭐️ this repository!
+
+<a href="https://www.buymeacoffee.com/olian04" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
+# Demos
+
+* Hello World: <https://jsfiddle.net/um3Lac8x/1/>
+* Table generation: <https://jsfiddle.net/35vLp9rh/2/>
+* Updates: <https://jsfiddle.net/etp1xz02/9/>
+* User input: <https://jsfiddle.net/wLh9t1rx/3/>
+
+__TBD:__ translate the following demos from raw brynja to easy-render.
+
+* Probabilistic Propagation: <https://jsfiddle.net/ebh7z13y/4/>
+* Interpolation animation:
+  1. <https://jsfiddle.net/2qg7dkwx/2/>
+  2. <https://jsfiddle.net/t2zrf61o/2/>
+  3. <https://jsfiddle.net/4u0f1mcz/3/>
+* With [html-router](https://github.com/Olian04/html-router): <https://jsfiddle.net/ao941b5r/1/>
+
+# Setup - Hello World
+
+You can setup easy-render in one of two ways.
+
+## Using the default "render" method
+
+The default render method expects a dom element with id 'root' to exsist.
+
 ```ts
 import { render } from 'easy-render';
 
-const updatePage = (name) => render`
-  <h2>Hello ${name}!</h2>
-  <input value="${name}" keyup=${e => updatePage(e.target.value || '')} />
+render`
+  <h2>Hello World!</h1>
 `;
-
-updatePage('Easy-Render');
 ```
 
+## Setting up your own Renderer instance
+
 ```ts
-import { render, r } from 'easy-render';
+import { Renderer } from 'easy-render';
+
+const { render } = Renderer({
+  rootElement: document.getElementById('root')
+});
 
 render`
-  <ul>
-    ${[1, 2, 3].map(v => r`
-      <li>${v}</li>
-    `)}
-  </ul>
+  <h2>Hello World!</h1>
 `;
 ```
 
 ---
 
 ## Very much a work in progress
+
+This library is still very much a work in progress and anything in this readme, ESPECIALLY beyond this point, is to be considered volatile and is likely to not work correctly or at all.
 
 ### r (render component)
 
