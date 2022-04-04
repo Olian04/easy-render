@@ -4,7 +4,7 @@ import { describe, it } from 'mocha';
 // tslint:disable-next-line:no-var-requires
 const jsdom: () => void = require('mocha-jsdom');
 
-import { render as defaultRender, Renderer } from '../../src/api';
+import { r, render as defaultRender, Renderer } from '../../src/api';
 
 describe('Integrations test', () => {
   jsdom();
@@ -18,13 +18,23 @@ describe('Integrations test', () => {
       expect(typeof defaultRender).to.equal('function');
 
       try {
-        const name = 'World';
-        defaultRender`
-          <h>Hello ${name}!</h>
-        `;
+        defaultRender``;
       } catch {
         expect.fail();
       }
+    });
+
+    it('should render a single div with an innerText', () => {
+      const conf = {
+        rootElement: document.createElement('div'),
+      };
+      const { render } = Renderer(conf);
+
+      render`
+        <div>Hello World</div>
+      `;
+
+      expect(conf.rootElement?.children[0].textContent).to.equal('Hello World');
     });
 
     it('should render a single div tag with no properties or children', () => {
@@ -87,5 +97,34 @@ describe('Integrations test', () => {
       expect(conf.rootElement?.id).to.equal('root');
       expect(conf.rootElement.className).to.equal('some classes');
     });
+
+    it('should render dynamic children when provided', () => {
+      const conf = {
+        rootElement: document.createElement('div'),
+      };
+      const { render } = Renderer(conf);
+
+      render`
+      <div>
+        ${[1, 2, 3].map(v => r`
+          <div>${v}</div>
+        `)}
+      </div>
+    `;
+
+    console.log(conf.rootElement.outerHTML);
+
+      expect(conf.rootElement.children[0].children.length).to.equal(3);
+
+      expect(conf.rootElement.children[0].children[0].tagName).to.equal('DIV');
+      expect(conf.rootElement.children[0].children[1].tagName).to.equal('DIV');
+      expect(conf.rootElement.children[0].children[2].tagName).to.equal('DIV');
+
+      expect(conf.rootElement.children[0].children[0].textContent).to.equal('1');
+      expect(conf.rootElement.children[0].children[1].textContent).to.equal('2');
+      expect(conf.rootElement.children[0].children[2].textContent).to.equal('3');
+    });
+
+
   });
 });

@@ -4,10 +4,11 @@ import { EasyRenderError } from './util/EasyRenderError';
 
 const isStaticSegment = (v: number) => v % 2 === 0;
 
-export const processTagFunctionData = (segment: { statics: TemplateStringsArray, dynamics: DynamicSegments[] }) => {
+export const processTagFunctionData = (segment: { statics: TemplateStringsArray, dynamics: DynamicSegments[] }): { xml: string, dynamics: DynamicsCache } => {
   const dynamicsCache: DynamicsCache = {
     functions: [],
     objects: [],
+    components: [],
   }
   let resultXML = '';
   let staticIndex = 0;
@@ -25,10 +26,12 @@ export const processTagFunctionData = (segment: { statics: TemplateStringsArray,
           break;
         case 'object':
           if (Array.isArray(dynVal)) {
-            // TODO: Implement array support
-            throw new EasyRenderError('Not yet implemented');
+            for (const builder of dynVal) {
+              resultXML += `<placeholder-component-${dynamicsCache.components.length} />`
+              dynamicsCache.components.push(builder);
+            }
           } else {
-            resultXML += `"placeholder-object-${dynamicsCache.functions.length}"`
+            resultXML += `"placeholder-object-${dynamicsCache.objects.length}"`
             dynamicsCache.objects.push(dynVal);
           }
           break;

@@ -41,5 +41,24 @@ describe('Unit test', () => {
       expect(ctx.dynamics.objects).to.be.empty;
       expect(ctx.dynamics.functions).to.be.empty;
     });
+
+    it('should add placeholder for dynamic children when provided', () => {
+      const name = 'World';
+      const ctx =  tagFunction`
+        <div>
+          ${[
+            _=>_
+              .child('div', _=>_
+                .text('Hello World')
+              )
+          ]}
+        </div>
+      `;
+
+      expect(ctx.xml).to.contain('placeholder-component-0');
+      expect(ctx.dynamics.objects).to.be.empty;
+      expect(ctx.dynamics.functions).to.be.empty;
+      expect(ctx.dynamics.components).to.not.be.empty;
+    });
   });
 });

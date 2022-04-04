@@ -1,13 +1,13 @@
 import { Renderer as BrynjaRenderer } from 'brynja';
 import { BuilderCB } from 'brynja/dist/builder';
-import { createComponentBuilder } from './createComponentBuilder';
+import { r } from './r';
 import { IRenderer } from './types/Renderer';
 
 export function Renderer(config: { rootElement: HTMLElement, rootElementBuilder?: BuilderCB }): IRenderer {
   const brynja = BrynjaRenderer(config);
   return {
     render: (staticSegments, ...dynamicSegments) => {
-      const rootComponentBuilder = createComponentBuilder(staticSegments, ...dynamicSegments);
+      const rootComponentBuilder = r(staticSegments, ...dynamicSegments);
 
       brynja.render(_=>_
         .do(config.rootElementBuilder ?? (_=> {

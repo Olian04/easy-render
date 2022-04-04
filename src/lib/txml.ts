@@ -3,14 +3,7 @@
  */
 
 import { parse } from './txml.src/txml';
-
-export interface XMLNode {
-  tagName: string;
-  attributes: {
-    [k: string]: string;
-  };
-  children: XMLNode[];
-}
+import { XMLNode } from '../types/XMLNode';
 
 export const XML = {
   parse:  (str: string) => parse(str) as XMLNode[],

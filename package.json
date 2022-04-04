@@ -1,7 +1,7 @@
 {
   "name": "easy-render",
-  "version": "0.1.0",
-  "description": "A vdom renderer with an easy to understand and easy use functional interface.",
+  "version": "0.2.0",
+  "description": "Easy-Render is a vDOM renderer designed to be as easy to use as possible.",
   "main": "dist/api.js",
   "types": "dist/api.d.ts",
   "scripts": {
