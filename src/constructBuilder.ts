@@ -3,10 +3,10 @@ import { XMLNode } from './lib/txml';
 import { DynamicsCache } from './types/DynamicCache';
 import { EasyRenderError } from './util/EasyRenderError';
 
-export const constructBuilder = createComponent((dom: XMLNode[], dynamics: DynamicsCache) => _=> {
-  for (let node of dom) {
+export const createBrynjaBuilder = createComponent((dom: XMLNode[], dynamics: DynamicsCache) => _=> {
+  for (const node of dom) {
     _.child(node.tagName, _=> {
-      for (let prop of Object.keys(node.attributes)) {
+      for (const prop of Object.keys(node.attributes)) {
         const segments = node.attributes.style.split('-');
         if (segments.length === 3) {
           /* istanbul ignore else */

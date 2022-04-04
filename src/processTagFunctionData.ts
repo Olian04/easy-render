@@ -1,6 +1,6 @@
-import { DynamicsCache } from "./types/DynamicCache";
-import { DynamicSegments } from "./types/DynamicSegments";
-import { EasyRenderError } from "./util/EasyRenderError";
+import { DynamicsCache } from './types/DynamicCache';
+import { DynamicSegments } from './types/DynamicSegments';
+import { EasyRenderError } from './util/EasyRenderError';
 
 const isStaticSegment = (v: number) => v % 2 === 0;
 

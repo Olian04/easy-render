@@ -1,7 +1,7 @@
 import { XML } from './lib/txml';
 import { DynamicSegments } from './types/DynamicSegments';
 import { processTagFunctionData } from './processTagFunctionData';
-import { constructBuilder } from './constructBuilder';
+import { createBrynjaBuilder } from './constructBuilder';
 import { BrynjaBuilder } from './types/BrynjaBuilder';
 
 export const createComponentBuilder = (staticSegments: TemplateStringsArray, ...dynamicSegments: DynamicSegments[]): BrynjaBuilder => {
@@ -10,6 +10,6 @@ export const createComponentBuilder = (staticSegments: TemplateStringsArray, ...
     dynamics: dynamicSegments,
   });
   const DOM = XML.parse(xml);
-  const builder = constructBuilder(DOM, dynamics);
+  const builder = createBrynjaBuilder(DOM, dynamics);
   return builder;
 }

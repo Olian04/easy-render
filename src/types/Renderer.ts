@@ -1,4 +1,4 @@
-import { RenderFunction } from "./RenderFunction";
+import { RenderFunction } from './RenderFunction';
 
 export interface IRenderer {
   render: RenderFunction;
