@@ -42,15 +42,12 @@ Please ⭐️ this repository!
 * Table generation: <https://jsfiddle.net/35vLp9rh/2/>
 * Updates: <https://jsfiddle.net/etp1xz02/9/>
 * User input: <https://jsfiddle.net/wLh9t1rx/3/>
-
-__TBD:__ translate the following demos from raw brynja to easy-render.
-
-* Probabilistic Propagation: <https://jsfiddle.net/ebh7z13y/4/>
+* Probabilistic Propagation: <https://jsfiddle.net/1vodkugj/13/>
 * Interpolation animation:
-  1. <https://jsfiddle.net/2qg7dkwx/2/>
-  2. <https://jsfiddle.net/t2zrf61o/2/>
-  3. <https://jsfiddle.net/4u0f1mcz/3/>
-* With [html-router](https://github.com/Olian04/html-router): <https://jsfiddle.net/ao941b5r/1/>
+  1. <https://jsfiddle.net/L5k6woyn/9/>
+  2. <https://jsfiddle.net/L5k6woyn/11/>
+  3. <https://jsfiddle.net/L5k6woyn/13/>
+* With [html-router](https://github.com/Olian04/html-router): <https://jsfiddle.net/cdxm6zy0/7/>
 
 # Setup - Hello World
 
