@@ -1,6 +1,8 @@
 import { defaultRendererFactory } from './defaultRenderer';
 import { RenderFunction } from './types/RenderFunction';
 
+export { createStyles, createComponent } from 'brynja';
+
 export { Renderer } from './renderer';
 export { r as r } from './r';
 
