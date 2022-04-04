@@ -12,39 +12,31 @@
 ```ts
 import { render } from 'easy-render';
 
-const name = 'Easy-Render';
-
-render`
-  <p>Hello ${name}!</p>
+const updatePage = (name) => render`
+  <h2>Hello ${name}!</h2>
+  <input value="${name}" keyup=${e => updatePage(e.target.value || '')} />
 `;
+
+updatePage('Easy-Render');
 ```
 
 ```ts
 import { render, r } from 'easy-render';
 
-const listElements = (elements = []) => {
-  render`
-    <ul>
-      ${elements.map(v => r`
-        <li>${v}</li>
-      `)}
-    </ul>
-  `;
-}
-
-listElements();
-let numbers = [];
-setInterval(() => {
-  numbers.push(numbers.length);
-  listElements(numbers);
-}, 1000);
-
+render`
+  <ul>
+    ${[1, 2, 3].map(v => r`
+      <li>${v}</li>
+    `)}
+  </ul>
+`;
 ```
 
 ---
 
-## r (render component)
+## Very much a work in progress
 
+### r (render component)
 
 `r` should return a brynja builder. This way `r` would be implicitly responsible for rendering its own subtree, independant from the entire tree.
 
@@ -63,7 +55,6 @@ render`
   </div>
 `;
 ```
-
 
 ...would result in the following brynja builder:
 
@@ -154,17 +145,16 @@ const r = (staticSegments: TemplateStringsArray, ...dynamicSegments: DynamicSegm
     static: staticSegments,
     dynamic: dynamicSegments,
   });
-  
+
   const DOM = parseXML(xml);
-  
+
   const builder = constructBrynjaBuilder({ DOM, dynamics });
-  
+
   return builder;
 }
 ```
 
-
-### WIP
+### MVP
 
 ```ts
 import { render } from 'easy-render';
@@ -231,7 +221,3 @@ builder({
   ],
 });
 ```
-
-Resources:
-
-* XML parser: <https://github.com/TobiasNickel/tXml>
