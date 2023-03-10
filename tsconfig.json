@@ -15,11 +15,6 @@
         "strict": true,
     },
     "include": [
-        "src/mocha-jsdom.d.ts",
         "src/**/*.ts",
-    ],
-    "exclude": [
-        "node_modules",
-        "src/**/*.spec.ts"
     ]
 }

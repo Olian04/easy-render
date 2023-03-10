@@ -1,62 +1,74 @@
+import { AstRoot, AttributeType, ChildType } from 'xml-template-literal';
 import { createComponent } from 'brynja';
-import { XMLNode } from './types/XMLNode';
-import { DynamicsCache } from './types/DynamicCache';
-import { EasyRenderError } from './util/EasyRenderError';
+import { DynamicSegments } from './types/DynamicSegments';
 
-export const createBrynjaBuilder = createComponent((dom: XMLNode[], dynamics: DynamicsCache) => _=> {
-  for (const node of dom) {
-    if (typeof node === 'string') {
-      _.text(node); // TEXT
-      continue;
-    }
-
-    // Dynamic component
-    const segments = node.tagName.split('-');
-    if (segments.length === 3 && segments[0] === 'placeholder' && segments[1] === 'component') {
-      const index = parseInt(segments[2], 10);
-      const builder = dynamics.components[index];
-      _.do(builder);
-      continue;
-    }
-
-    _.child(node.tagName, _=> {
-      for (const prop of Object.keys(node.attributes)) {
-
-        // Inject dynamic data
-        const segments = node.attributes[prop].split('-');
-        if (segments.length === 3 && segments[0] === 'placeholder') {
-          if (prop === 'style' && segments[1] === 'object') {
-            // CSS in JS styles
-            const index = parseInt(segments[2], 10);
-            _.style(dynamics.objects[index]); // STYLE
-            continue;
-          }
-          if (segments[1] === 'function') {
-            // TODO: Check if prop is a known event? Currently anything that looks like an event handler is treated like an event.
-            // Event handlers
-            const index = parseInt(segments[2], 10);
-            _.on(prop, dynamics.functions[index]); // ON
-            continue;
+export const createBrynjaBuilder = createComponent((ast: Pick<AstRoot<DynamicSegments>, 'children'> ) => _=> {
+  for (const node of ast.children) {
+    if (node.type === ChildType.Text && node.value.trim().length > 0) {
+      _.text(node.value);
+    } else if (node.type === ChildType.Data && Array.isArray(node.value)) {
+      _.do(...node.value);
+    } else if (node.type === ChildType.Data && `${node.value}`.trim().length > 0) {
+      _.text(node.value);
+    } else if (node.type === ChildType.Node) {
+      _.child(node.tag, _=> {
+        for (const attr of node.attributes) {
+          if (
+            attr.key === 'style'
+            && attr.type === AttributeType.Data
+            && typeof attr.value !== 'number'
+            && typeof attr.value !== 'string'
+            && typeof attr.value !== 'function'
+            && !Array.isArray(attr.value)
+          ) {
+            _.style(attr.value);
+          } else if (
+            attr.key === 'style'
+            && attr.type === AttributeType.Composite
+            && attr.value.length === 1
+            && attr.value[0].type === AttributeType.Data
+            && typeof attr.value[0].value !== 'number'
+            && typeof attr.value[0].value !== 'string'
+            && typeof attr.value[0].value !== 'function'
+            && !Array.isArray(attr.value[0].value)
+          ) {
+            _.style(attr.value[0].value);
+          } else if (
+            attr.type === AttributeType.Data
+            && typeof attr.value === 'function'
+          ) {
+            _.on(attr.key, attr.value);
+          } else if (
+            attr.type === AttributeType.Composite
+            && attr.value.length === 1
+            && attr.value[0].type === AttributeType.Data
+            && typeof attr.value[0].value === 'function'
+          ) {
+            _.on(attr.key, attr.value[0].value);
+          } else {
+            const val = attr.type === AttributeType.Composite
+              ? attr.value.map(v => `${v.value}`).join('')
+              : `${attr.value}`;
+            switch (attr.key) {
+              case 'id':
+                _.id(val);
+                break;
+              case 'name':
+                _.name(val);
+                break;
+              case 'value':
+                _.value(val);
+                break;
+              case 'class':
+                _.class(val);
+              default:
+                _.prop(attr.key, val);
+            }
           }
         }
+      });
 
-        switch (prop) {
-          case 'id':
-            _.id(node.attributes.id); // ID
-            break;
-          case 'name':
-            _.name(node.attributes.name); // NAME
-            break;
-          case 'value':
-            _.value(node.attributes.value); // VALUE
-            break;
-          case 'class':
-            _.class(node.attributes.class); // CLASS
-          default:
-            _.prop(prop, node.attributes[prop]); // <anything else>
-        }
-      }
-      _.do(createBrynjaBuilder(node.children, dynamics)); // CHILDREN
-    })
+      _.do(createBrynjaBuilder(node));
+    }
   }
 });

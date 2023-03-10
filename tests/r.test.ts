@@ -1,9 +1,9 @@
-import { AssertionError, expect } from 'chai';
+import { expect } from 'chai';
 import { describe, it } from 'mocha';
 
 import { buildNode } from 'brynja/dist/builder';
 
-import { r } from '../../src/r';
+import { r as html } from '../src/r';
 import { VNode } from 'brynja/dist/interfaces/VNode';
 
 const defaultRootTag = 'div';
@@ -18,9 +18,9 @@ const expectEqualToDefault = <K extends keyof VNode>(target: VNode, ...keysToMat
 describe('Unit test', () => {
   describe('r', () => {
     it('should be a tag function that returns a brynja builder', () => {
-      expect(typeof r).to.equal('function');
+      expect(typeof html).to.equal('function');
 
-      const builder = r`
+      const builder = html`
         <div></div>
       `;
 
@@ -35,19 +35,22 @@ describe('Unit test', () => {
     });
 
     it('should add text when provided', () => {
-      const builder = r`
+      const builder = html`
         <div>Hello World</div>
       `;
 
       const [vDom, styles] = buildNode(defaultRootTag, builder);
+
+      console.log(vDom);
 
       expect(styles).to.deep.equal({});
       expectEqualToDefault(vDom, 'events', 'props', 'value', 'text', 'tag');
       expectEqualToDefault(vDom.children[0], 'events', 'props', 'value', 'tag', 'children');
       expect(vDom.children[0].text).to.equal('Hello World');
     });
+
     it('should add id when provided', () => {
-      const builder = r`
+      const builder = html`
         <div id="foo"></div>
       `;
 
@@ -60,7 +63,7 @@ describe('Unit test', () => {
     });
 
     it('should add class when provided', () => {
-      const builder = r`
+      const builder = html`
         <div class="foo"></div>
       `;
 
@@ -73,7 +76,7 @@ describe('Unit test', () => {
     });
 
     it('should add generated class when style object is provided', () => {
-      const builder = r`
+      const builder = html`
         <div style=${{ color: 'blue' }}></div>
       `;
 
@@ -88,7 +91,7 @@ describe('Unit test', () => {
     });
 
     it('should add style when style string is provided', () => {
-      const builder = r`
+      const builder = html`
         <div style="width: 100px"></div>
       `;
 
@@ -101,7 +104,7 @@ describe('Unit test', () => {
     });
 
     it('should merge class property when both class and style is provided', () => {
-      const builder = r`
+      const builder = html`
         <div class="foo" style=${{ color: 'blue' }}></div>
       `;
 
@@ -116,7 +119,7 @@ describe('Unit test', () => {
     });
 
     it('should set value when provided', () => {
-      const builder = r`
+      const builder = html`
         <input value="${'foo'}" />
       `;
 
@@ -129,7 +132,7 @@ describe('Unit test', () => {
     });
 
     it('should render static children when provided', () => {
-      const builder = r`
+      const builder = html`
         <div>
           <div></div>
           <div>
@@ -155,9 +158,9 @@ describe('Unit test', () => {
     });
 
     it('should render dynamic children when provided', () => {
-      const builder = r`
+      const builder = html`
         <div>
-          ${[1, 2, 3].map(v => r`
+          ${[1, 2, 3].map(v => html`
             <div>${v}</div>
           `)}
         </div>
